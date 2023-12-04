@@ -1,52 +1,85 @@
-import Store from '../../store';
-import * as selectors from '../../store/selectors';
-
 import {
   IonPage,
   IonHeader,
   IonToolbar,
   IonTitle,
   IonContent,
-  IonItem,
-  IonLabel,
   IonList,
+  IonIcon,
+  IonInput,
+  IonButton,
 } from '@ionic/react';
 
-const ListEntry = ({ list, ...props }) => (
-  <IonItem routerLink={`/tabs/products/${list.id}`} className="list-entry">
-    <IonLabel>{list.name}</IonLabel>
-  </IonItem>
-);
-
-const AllProducts = ({ onSelect }) => {
-  const products = Store.useState(selectors.getProducts);
-
-  return (
-    <>
-      {products.map((list, i) => (
-        <ListEntry list={list} key={i} />
-      ))}
-    </>
-  );
-};
+import { addCircle, cloudUpload } from 'ionicons/icons';
 
 const Create = () => {
+  const handleFile = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await convertBase64(file);
+
+    console.log(base64)
+  }
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+            resolve(fileReader.result);
+        };
+
+        fileReader.onerror = (error) => {
+            reject(error);
+        };
+    });
+};
   return (
     <IonPage>
-      <IonHeader translucent={true}>
-        <IonToolbar>
-          <IonTitle>Create new product</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen={true}>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Create new product</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonList>
-          <AllProducts />
-        </IonList>
+      <IonContent fullscreen={true} class="mx-3">
+        <div className="mx-4 mt-14">
+          <IonHeader collapse="condense">
+            <IonToolbar>
+              <IonTitle class='text-center text-3xl' size="large">Create product</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <IonList>
+            <IonInput
+              label="Name"
+              labelPlacement="floating"
+              counter={true}
+              maxlength={20}
+            ></IonInput>
+            <IonInput
+              label="Description"
+              labelPlacement="floating"
+              counter={true}
+              maxlength={100}
+            ></IonInput>
+
+            <IonInput
+              label="Price"
+              labelPlacement="floating"
+              counter={true}
+              maxlength={10}
+            ></IonInput>
+            <IonButton expand="block">
+              <IonIcon slot="start" icon={cloudUpload}></IonIcon>
+              <label htmlFor="addcsv">Upload image</label>
+            </IonButton>
+            <input
+              type="file"
+              name="file"
+              id="addcsv"
+              accept="image/png, image/jpeg"
+              className="hidden"
+              onChange={(e) => handleFile(e)}
+            />
+          </IonList>
+          <IonButton>
+            <IonIcon slot="end" icon={addCircle}></IonIcon> Create
+          </IonButton>
+        </div>
       </IonContent>
     </IonPage>
   );
