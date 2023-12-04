@@ -35,17 +35,17 @@ const ListItemEntry = ({ list, item }) => (
 );
 
 const ListDetail = ({ match }) => {
-  const posts = Store.useState(selectors.getPosts);
+  const products = Store.useState(selectors.getProducts);
   const params = useParams();
   const { listId } = params;
-  const loadedList = posts.find(l => l.id === listId);
+  const loadedList = products.find(l => l.id === listId);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/tabs/posts" />
+            <IonBackButton defaultHref="/tabs/products" />
           </IonButtons>
           <IonTitle>{loadedList.name}</IonTitle>
         </IonToolbar>

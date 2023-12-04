@@ -13,17 +13,17 @@ import {
 } from '@ionic/react';
 
 const ListEntry = ({ list, ...props }) => (
-  <IonItem routerLink={`/tabs/posts/${list.id}`} className="list-entry">
+  <IonItem routerLink={`/tabs/products/${list.id}`} className="list-entry">
     <IonLabel>{list.name}</IonLabel>
   </IonItem>
 );
 
-const AllPosts = ({ onSelect }) => {
-  const posts = Store.useState(selectors.getPosts);
+const AllProducts = ({ onSelect }) => {
+  const products = Store.useState(selectors.getProducts);
 
   return (
     <>
-      {posts.map((list, i) => (
+      {products.map((list, i) => (
         <ListEntry list={list} key={i} />
       ))}
     </>
@@ -35,17 +35,17 @@ const Create = () => {
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonTitle>Create new post</IonTitle>
+          <IonTitle>Create new product</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen={true}>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Create new post</IonTitle>
+            <IonTitle size="large">Create new product</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonList>
-          <AllPosts />
+          <AllProducts />
         </IonList>
       </IonContent>
     </IonPage>

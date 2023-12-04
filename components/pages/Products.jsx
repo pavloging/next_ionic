@@ -35,7 +35,7 @@ const CreateCard = ({ title, type, text, image }) => (
     </div>{' '}
   </Card>
 );
-const Posts = () => {
+const Products = () => {
   const homeItems = Store.useState(getHomeItems);
   return (
     <IonPage>
@@ -44,7 +44,7 @@ const Posts = () => {
         {' '}
         <IonToolbar>
           {' '}
-          <IonTitle>Posts</IonTitle>{' '}
+          <IonTitle>Products</IonTitle>{' '}
           <IonButtons slot="start">
             {' '}
             <IonMenuButton />{' '}
@@ -60,7 +60,7 @@ const Posts = () => {
           {' '}
           <IonToolbar>
             {' '}
-            <IonTitle size="large">Posts</IonTitle>{' '}
+            <IonTitle size="large">Products</IonTitle>{' '}
           </IonToolbar>{' '}
         </IonHeader>{' '}
         {homeItems.map((i, index) => (
@@ -70,4 +70,4 @@ const Posts = () => {
     </IonPage>
   );
 };
-export default Posts;
+export default Products;

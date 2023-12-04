@@ -16,11 +16,11 @@ export const setSettings = settings => {
 
 export const setDone = (list, item, done) => {
   Store.update((s, o) => {
-    const listIndex = o.posts.findIndex(l => l === list);
-    const itemIndex = o.posts[listIndex].items.findIndex(i => i === item);
-    s.posts[listIndex].items[itemIndex].done = done;
+    const listIndex = o.products.findIndex(l => l === list);
+    const itemIndex = o.products[listIndex].items.findIndex(i => i === item);
+    s.products[listIndex].items[itemIndex].done = done;
     if (list === o.selectedList) {
-      s.selectedList = s.posts[listIndex];
+      s.selectedList = s.products[listIndex];
     }
   });
 };

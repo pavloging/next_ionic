@@ -6,7 +6,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import Create from './pages/Create';
-import Posts from './pages/Posts';
+import Products from './pages/Products';
 import ListDetail from './pages/ListDetail';
 import Tabs from './pages/Tabs';
 

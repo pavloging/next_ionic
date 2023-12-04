@@ -27,8 +27,8 @@ export const homeItems = [
   },
 ];
 
-// Some fake posts
-export const posts = [
+// Some fake products
+export const products = [
   {
     name: 'Groceries',
     id: 'groceries',

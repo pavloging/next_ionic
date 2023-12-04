@@ -4,7 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { cog, addCircle, list } from 'ionicons/icons';
 
 import Home from './Create';
-import Posts from './Posts';
+import Products from './Products';
 import ListDetail from './ListDetail';
 
 const Tabs = () => {
@@ -12,14 +12,14 @@ const Tabs = () => {
     <IonTabs>
       <IonRouterOutlet>
         <Route path="/tabs/create" render={() => <Home />} exact={true} />
-        <Route path="/tabs/posts" render={() => <Posts />} exact={true} />
-        <Route path="/tabs/posts/:listId" render={() => <ListDetail />} exact={true} />
+        <Route path="/tabs/products" render={() => <Products />} exact={true} />
+        <Route path="/tabs/products/:listId" render={() => <ListDetail />} exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/create" />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="tab2" href="/tabs/posts">
+        <IonTabButton tab="tab2" href="/tabs/products">
           <IonIcon icon={list} />
-          <IonLabel>Posts</IonLabel>
+          <IonLabel>Products</IonLabel>
         </IonTabButton>
         <IonTabButton tab="tab1" href="/tabs/create">
           <IonIcon icon={addCircle} />
