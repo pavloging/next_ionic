@@ -9,38 +9,43 @@ import {
   IonInput,
   IonButton,
 } from '@ionic/react';
-
+import { useQRCode } from 'next-qrcode';
 import { addCircle, cloudUpload } from 'ionicons/icons';
+import { useState } from 'react';
 
 const Create = () => {
-  const handleFile = async (event) => {
+  const { Image } = useQRCode();
+  const [isShow, setIsShow] = useState(false);
+  const handleFile = async event => {
     const file = event.target.files[0];
     const base64 = await convertBase64(file);
 
-    console.log(base64)
-  }
+    console.log(base64);
+  };
 
-  const convertBase64 = (file) => {
+  const convertBase64 = file => {
     return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
 
-        fileReader.onload = () => {
-            resolve(fileReader.result);
-        };
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
 
-        fileReader.onerror = (error) => {
-            reject(error);
-        };
+      fileReader.onerror = error => {
+        reject(error);
+      };
     });
-};
+  };
   return (
     <IonPage>
       <IonContent fullscreen={true} class="mx-3">
         <div className="mx-4 mt-14">
           <IonHeader collapse="condense">
             <IonToolbar>
-              <IonTitle class='text-center text-3xl' size="large">Create product</IonTitle>
+              <IonTitle class="text-center text-3xl" size="large">
+                Create product
+              </IonTitle>
             </IonToolbar>
           </IonHeader>
           <IonList>
@@ -73,13 +78,33 @@ const Create = () => {
               id="addcsv"
               accept="image/png, image/jpeg"
               className="hidden"
-              onChange={(e) => handleFile(e)}
+              onChange={e => handleFile(e)}
             />
           </IonList>
-          <IonButton>
+          <IonButton onClick={() => setIsShow(prev => !prev)}>
             <IonIcon slot="end" icon={addCircle}></IonIcon> Create
           </IonButton>
         </div>
+
+        {isShow && (
+          <div className='flex justify-center'>
+            <Image
+              text={'http://localhost:3000/products/1'}
+              options={{
+                type: 'image/jpeg',
+                quality: 0.3,
+                errorCorrectionLevel: 'M',
+                margin: 3,
+                scale: 4,
+                width: 200,
+                color: {
+                  dark: '#FFF',
+                  light: '#000',
+                },
+              }}
+            />
+          </div>
+        )}
       </IonContent>
     </IonPage>
   );
