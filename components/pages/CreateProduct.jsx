@@ -49,18 +49,11 @@ const CreateProduct = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     const productId = nanoid();
-    const formData = new FormData();
-    formData.append('image', fs.readFileSync(data.image[1]));
-
-    const imageURLFromHost = await axios.post(
-      `https://api.imgbb.com/1/upload?key=4b10c21954afd8147c0056e9d59a547d`,
-      formData
-    );
 
     dispatch(
       createProduct({
         id: productId,
-        product: { ...data, image: imageURLFromHost, id: productId },
+        product: { ...data, image: data.image[1], id: productId },
         clearForm,
       })
     );
