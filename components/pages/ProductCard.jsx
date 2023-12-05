@@ -6,7 +6,7 @@ const ProductCard = ({ id, title, price, description, image }) => (
     <Card onClick={() => console.log(id)} className="my-4 mx-auto">
       <div className="h-32 w-full relative">
         <img
-          className="rounded-t-xl object-cover min-w-full min-h-full max-w-full max-h-full"
+          className="bg-lime-600 rounded-t-xl object-cover min-w-full min-h-full max-w-full max-h-full"
           src={image}
           alt=""
         />

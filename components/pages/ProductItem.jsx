@@ -35,7 +35,7 @@ const ProductItem = () => {
     <>
       {product && (
         <>
-          <img src={product.image} alt="" />
+          <img className='bg-lime-600' src={product.image} alt="" />
           <div className="m-4">
             <QRCode
               value={`Title: ${product.title}, \nDescription: ${

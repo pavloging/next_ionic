@@ -3,15 +3,11 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonList,
   IonIcon,
   IonInput,
   IonButton,
   IonText,
-  IonItem,
 } from '@ionic/react';
 import { addCircle, cloudUpload } from 'ionicons/icons';
 import useForm from '../../../hooks/useForm';
@@ -53,7 +49,6 @@ const CreateProduct = () => {
 
   const handleFile = async event => {
     const file = event.target.files[0];
-    const base64 = await convertBase64(file);
 
     function uploadImage(img) {
       let body = new FormData();
@@ -69,7 +64,7 @@ const CreateProduct = () => {
 
     uploadImage(event.target.files[0])
       .then(resp => {
-        console.log(resp.data.data.display_url); // I'm aware it's data.data, that is how it returns stuff
+        console.log(resp.data.data.display_url);
         const fakeEvent = {
           target: {
             name: 'image',
@@ -126,7 +121,6 @@ const CreateProduct = () => {
           {formFields.map(field => {
             console.log(errors);
             return (
-              // <IonItem className='p-0' key={field.name + '_' + field.label}>
               <>
                 <IonInput
                   label={field.label}
@@ -140,7 +134,6 @@ const CreateProduct = () => {
                 />
                 <IonText color="danger">{errors[field.name]}</IonText>
               </>
-              // </IonItem>
             );
           })}
           <div className="flex flex-col text-center mt-2 mb-2">
@@ -164,17 +157,6 @@ const CreateProduct = () => {
           <IonText color="danger">
             {errors.image}
           </IonText>
-
-          {/* <IonItem>
-            <IonInput
-              type="file"
-              name="image"
-              id="addcsv"
-              accept="image/*"
-              onChange={e => handleFile(e)}
-            />
-            <IonText color="danger">{errors.image}</IonText>
-          </IonItem> */}
         </IonList>
         <IonButton type="submit">
           <IonIcon slot="end" icon={addCircle}></IonIcon> Create
