@@ -14,7 +14,7 @@ const ProductItem = () => {
   const fetchProductById = async () => {
     try {
       const { data } = await axios.get(
-        'https://products-c6e24-default-rtdb.firebaseio.com/products/CakRG4elPkGyqhiSn_In9.json'
+        `https://products-c6e24-default-rtdb.firebaseio.com/products/${listId}.json`
       );
       setProduct(data);
       setProductLoading(false);

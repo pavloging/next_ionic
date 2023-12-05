@@ -12,6 +12,6 @@ const Products = () => {
     dispatch(loadProductsList());
   }, []);
 
-  return <>{products && products.map((i, index) => <ProductCard {...i} key={index} />)}</>;
+  return <>{products.length && products.map((i, index) => <ProductCard {...i} key={index} />)}</>;
 };
 export default Products;
