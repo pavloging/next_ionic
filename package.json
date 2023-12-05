@@ -27,6 +27,7 @@
     "@types/react-router-dom": "^5.1.7",
     "axios": "^1.6.2",
     "classnames": "^2.2.6",
+    "imgbb-uploader": "^1.5.1",
     "nanoid": "^4.0.2",
     "next": "^13.2.4",
     "react": "^18.2.0",

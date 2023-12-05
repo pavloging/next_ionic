@@ -2,7 +2,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { StatusBar, Style } from '@capacitor/status-bar';
 
 import { IonReactRouter } from '@ionic/react-router';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import Tabs from './pages/Tabs';
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,8 @@ const AppShell = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet id="main">
-          <Route path="/" render={() => <Tabs />} />
+          <Route render={() => <Tabs />} />
+          <Route path="/" render={() => <Redirect to="/products" />} exact={true} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

@@ -1,3 +1,7 @@
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { nanoid } from 'nanoid';
 import {
   IonHeader,
   IonToolbar,
@@ -10,11 +14,8 @@ import {
   IonItem,
 } from '@ionic/react';
 import { addCircle, cloudUpload } from 'ionicons/icons';
-import { useState } from 'react';
 import useForm from '../../../hooks/useForm';
-import { useDispatch } from 'react-redux';
 import { createProduct } from '../../../store/products/productsActions';
-import { nanoid } from 'nanoid';
 import { validatorConfig } from './validatorConfig';
 
 const formFields = [
@@ -40,7 +41,6 @@ const formFields = [
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
-  const [isShow, setIsShow] = useState(false);
   const { data, handleChange, clearForm, errors, validate } = useForm(
     {
       title: '',
@@ -54,15 +54,36 @@ const CreateProduct = () => {
   const handleFile = async event => {
     const file = event.target.files[0];
     const base64 = await convertBase64(file);
-    console.log('file');
-    const fakeEvent = {
-      target: {
-        name: 'image',
-        value: [file.name, base64],
-      },
-    };
 
-    handleChange(fakeEvent);
+    function uploadImage(img) {
+      let body = new FormData();
+      body.set('key', 'bb2d39e7c358737b679fa1e21bae41e4');
+      body.append('image', img);
+
+      return axios({
+        method: 'post',
+        url: 'https://api.imgbb.com/1/upload',
+        data: body,
+      });
+    }
+
+    uploadImage(event.target.files[0])
+      .then(resp => {
+        console.log(resp.data.data.display_url); // I'm aware it's data.data, that is how it returns stuff
+        const fakeEvent = {
+          target: {
+            name: 'image',
+            value: [file.name, resp.data.data.display_url],
+          },
+        };
+
+        console.log(fakeEvent);
+
+        handleChange(fakeEvent);
+      })
+      .catch(error => {
+        toast.error(error.message);
+      });
   };
 
   const handleSubmit = async e => {
@@ -105,7 +126,8 @@ const CreateProduct = () => {
           {formFields.map(field => {
             console.log(errors);
             return (
-              <IonItem key={field.name + '_' + field.label}>
+              // <IonItem className='p-0' key={field.name + '_' + field.label}>
+              <>
                 <IonInput
                   label={field.label}
                   labelPlacement="floating"
@@ -117,14 +139,18 @@ const CreateProduct = () => {
                   onIonChange={handleChange}
                 />
                 <IonText color="danger">{errors[field.name]}</IonText>
-              </IonItem>
+              </>
+              // </IonItem>
             );
           })}
-          <div className="flex items-center">
-            <IonButton expand="block" class="w-70 mr-3">
+          <div className="flex flex-col text-center mt-2 mb-2">
+            <label
+              htmlFor="addcsv"
+              className="flex gap-2 bg-blue-500 rounded-xl cursor-pointer p-4 items-center justify-center"
+            >
               <IonIcon slot="start" icon={cloudUpload} />
-              <label htmlFor="addcsv">Upload image</label>
-            </IonButton>
+              Upload image
+            </label>
             {data.image[1] && <IonText>{data.image[0]}</IonText>}
           </div>
           <input
@@ -135,6 +161,9 @@ const CreateProduct = () => {
             className="hidden"
             onChange={e => handleFile(e)}
           />
+          <IonText color="danger">
+            {errors.image}
+          </IonText>
 
           {/* <IonItem>
             <IonInput
@@ -147,7 +176,7 @@ const CreateProduct = () => {
             <IonText color="danger">{errors.image}</IonText>
           </IonItem> */}
         </IonList>
-        <IonButton type="submit" onClick={() => setIsShow(prev => !prev)}>
+        <IonButton type="submit">
           <IonIcon slot="end" icon={addCircle}></IonIcon> Create
         </IonButton>
       </form>
