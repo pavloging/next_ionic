@@ -2,7 +2,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import { addCircle, list } from 'ionicons/icons';
 
-import Home from './Create';
+import CreateProduct from './CreateProduct';
 import Products from './Products';
 import ProductItem from './ProductItem';
 
@@ -10,7 +10,7 @@ const Tabs = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route path="/create" render={() => <Home />} exact={true} />
+        <Route path="/create" render={() => <CreateProduct />} exact={true} />
         <Route path="/products" render={() => <Products />} exact={true} />
         <Route path="/products/:listId" render={() => <ProductItem />} exact={true} />
         <Route path="/" render={() => <Redirect to="/create" />} exact={true} />
