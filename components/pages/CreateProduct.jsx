@@ -98,7 +98,7 @@ const CreateProduct = () => {
                 counter={true}
                 maxlength={20}
                 name="name"
-                value={data.value}
+                value={data.name}
                 onIonChange={handleChange}
               />
               <IonInput
