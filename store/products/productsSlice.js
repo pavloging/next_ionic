@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createProduct, loadProductsList } from './productsActions';
+import { createProduct, loadProductById, loadProductsList } from './productsActions';
 
 const initialState = {
   entities: [],
@@ -28,7 +28,8 @@ const productsSlice = createSlice({
       state.error = false;
     });
     builder.addCase(createProduct.fulfilled.type, (state, action) => {
-      state.entities = [action.payload, ...state.entities];
+      console.log(action.payload);
+      state.entities = [{ ...action.payload }, ...state.entities];
     });
     builder.addCase(createProduct.rejected.type, state => {
       state.error = action.payload;

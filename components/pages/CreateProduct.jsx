@@ -26,7 +26,7 @@ const CreateProduct = () => {
   const dispatch = useDispatch();
   const [isShow, setIsShow] = useState(false);
   const { data, handleChange, clearForm } = useForm({
-    name: '',
+    title: '',
     description: '',
     price: '',
     image: '',
@@ -53,7 +53,7 @@ const CreateProduct = () => {
     dispatch(
       createProduct({
         id: productId,
-        product: { ...data, image: data.image[1], id: productId },
+        product: { ...data, image: '', id: productId },
         clearForm,
       })
     );
@@ -101,8 +101,8 @@ const CreateProduct = () => {
                 labelPlacement="floating"
                 counter={true}
                 maxlength={20}
-                name="name"
-                value={data.name}
+                name="title"
+                value={data.title}
                 onIonChange={handleChange}
               />
               <IonInput

@@ -9,15 +9,31 @@ import {
 } from '@ionic/react';
 import { Redirect, useParams } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-import { getProductById, getProductsLoadingStatus } from '../../store/products/productsSelectors';
+import { useEffect, useState } from 'react';
+import productsService from '../../services/products.service';
+import { toast } from 'react-toastify';
 
 const ProductItem = () => {
+  const [product, setProduct] = useState();
+  const [productLoading, setProductLoading] = useState(true);
   const params = useParams();
   const { listId } = params;
-  const product = useSelector(state => getProductById(state, listId));
-  const productsLoading = useSelector(getProductsLoadingStatus);
-  if (!productsLoading && !product) {
+
+  const fetchProductById = async () => {
+    try {
+      const { content } = await productsService.fetchProductById(listId);
+      setProduct(content);
+      setProductLoading(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProductById();
+  }, []);
+
+  if (!productLoading && !product) {
     return <Redirect to="/products" />;
   }
 
