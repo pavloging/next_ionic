@@ -1,19 +1,44 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import { addCircle, list } from 'ionicons/icons';
 
-import CreateProduct from './CreateProduct';
+import CreateProduct from './CreateProduct/CreateProduct';
 import Products from './Products';
 import ProductItem from './ProductItem';
+import Layout from '../layout/layout';
 
 const Tabs = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route path="/create" render={() => <CreateProduct />} exact={true} />
-        <Route path="/products" render={() => <Products />} exact={true} />
-        <Route path="/products/:listId" render={() => <ProductItem />} exact={true} />
-        <Route path="/" render={() => <Redirect to="/create" />} exact={true} />
+        <Route
+          path="/create"
+          render={() => (
+            <Layout title="Create product">
+              <CreateProduct />
+            </Layout>
+          )}
+          exact={true}
+        />
+        <Route
+          path="/products"
+          render={() => (
+            <Layout title="Products">
+              <Products />
+            </Layout>
+          )}
+          exact={true}
+        />
+        <Route
+          path="/products/:listId"
+          render={() => (
+            <Layout title="Product">
+              <ProductItem />
+            </Layout>
+          )}
+          exact={true}
+        />
+        {/* <Route path="/" render={() => <Redirect to="/create" />} exact={true} /> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab2" href="/products">

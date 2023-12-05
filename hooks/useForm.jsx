@@ -1,20 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { validator } from '../utils/validator';
 
-export default function useForm(initialState = {}) {
+export default function useForm(initialState = {}, config) {
   const [data, setData] = useState(initialState);
+  const [errors, setErrors] = useState({});
 
   const handleChange = ({ target }) => {
-    console.log('event');
     setData(prevState => ({
       ...prevState,
       [target.name]: target.type === 'number' ? Number(target.value) : target.value,
     }));
   };
 
+  const validate = () => {
+    console.log('log');
+    if (config) {
+      const errors = validator(data, config);
+      setErrors(errors);
+      return errors;
+    }
+  };
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      validate();
+    }
+  }, [data]);
+
   const clearForm = () => {
-    console.log('clear');
     setData(initialState);
   };
 
-  return { data, handleChange, clearForm };
+  return { data, handleChange, errors, validate, clearForm };
 }

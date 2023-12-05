@@ -1,17 +1,9 @@
-import {
-  IonBackButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
 import { Redirect, useParams } from 'react-router-dom';
-
 import { useEffect, useState } from 'react';
 import productsService from '../../services/products.service';
 import { toast } from 'react-toastify';
+import QRCode from 'react-qr-code';
+import axios from 'axios';
 
 const ProductItem = () => {
   const [product, setProduct] = useState();
@@ -21,8 +13,10 @@ const ProductItem = () => {
 
   const fetchProductById = async () => {
     try {
-      const { content } = await productsService.fetchProductById(listId);
-      setProduct(content);
+      const { data } = await axios.get(
+        'https://products-c6e24-default-rtdb.firebaseio.com/products/CakRG4elPkGyqhiSn_In9.json'
+      );
+      setProduct(data);
       setProductLoading(false);
     } catch (error) {
       toast.error(error.message);
@@ -38,28 +32,24 @@ const ProductItem = () => {
   }
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/products" />
-          </IonButtons>
-          <IonTitle>Product</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        {product && (
-          <>
-            <img src={product.image} alt="" />
-            <div class="m-4">
-              <h1>Title: {product.title}</h1>
-              <h2>Price: {product.price}$</h2>
-              <p>Description: {product.description}</p>
-            </div>
-          </>
-        )}
-      </IonContent>
-    </IonPage>
+    <>
+      {product && (
+        <>
+          <img src={product.image} alt="" />
+          <div class="m-4">
+            <QRCode
+              value={`Title: ${product.title}, \nDescription: ${
+                product.description
+              } \nPrice: ${product.price.toString()}`}
+              size={150}
+            />
+            <h1>Title: {product.title}</h1>
+            <h2>Price: {product.price}$</h2>
+            <p>Description: {product.description}</p>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
