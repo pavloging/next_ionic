@@ -10,6 +10,8 @@ import {
   IonButton,
   IonImg,
   IonText,
+  IonButtons,
+  IonMenuButton,
 } from '@ionic/react';
 import { useQRCode } from 'next-qrcode';
 import { addCircle, cloudUpload } from 'ionicons/icons';
@@ -81,6 +83,15 @@ const CreateProduct = () => {
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Create product</IonTitle>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonButtons slot="end"></IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonContent fullscreen={true} class="mx-3">
         <div className="mx-4 mt-14">
           <IonHeader collapse="condense">
